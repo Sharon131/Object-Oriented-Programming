@@ -1,21 +1,24 @@
 package agh.cs.lab7;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-abstract public class AbstractWorldMap implements IWorldMap {
+abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObserver {
     private MapVisualizer visualizer = new MapVisualizer(this);
+    protected MapBoundary mapBoundaries = new MapBoundary();
     protected List<Animal> animals = new ArrayList<>();
     protected Map<Vector2d, Animal> animalsByPositions = new HashMap<>();
-
-    abstract protected Vector2d[] getLowerLeftAndUpperRightCorner();
 
     public String toString (){
         Vector2d [] Corners = getLowerLeftAndUpperRightCorner();
 
         return visualizer.draw(Corners[0], Corners[1]);
+    }
+
+    protected Vector2d[] getLowerLeftAndUpperRightCorner(){
+        Vector2d lowerLeft = new Vector2d(mapBoundaries.getMinX(), mapBoundaries.getMinY());
+        Vector2d upperRight = new Vector2d(mapBoundaries.getMaxX(), mapBoundaries.getMaxY());
+        Vector2d[] Corners = {lowerLeft, upperRight};
+        return Corners;
     }
 
     @Override
@@ -26,6 +29,9 @@ abstract public class AbstractWorldMap implements IWorldMap {
         }
         animals.add(animal);
         animalsByPositions.putIfAbsent(animal.getPosition(), animal);
+        animal.addObserver(this);
+        animal.addObserver(mapBoundaries);
+        mapBoundaries.addNewPosition(animal.getPosition());
         return true;
     }
 
@@ -35,20 +41,18 @@ abstract public class AbstractWorldMap implements IWorldMap {
 
         for (int index = 0; index < directions.length; index++) {
             Animal animalOnMap = animals.get(index % numberOfAnimals);
-            Vector2d positionOfAnimal = animalOnMap.getPosition();
-
             animalOnMap.move(directions[index]);
-            animals.set(index % numberOfAnimals, animalOnMap);
-
-            if(!positionOfAnimal.equals(animalOnMap.getPosition())){
-                animalsByPositions.remove(positionOfAnimal);
-                animalsByPositions.putIfAbsent(animalOnMap.getPosition(), animalOnMap);
-            }
         }
     }
 
     @Override
     public boolean isOccupied(Vector2d position) {
         return (this.objectAt(position) != null);
+    }
+
+    public void positionChanged(Vector2d oldPosition, Vector2d newPosition){
+        Animal animalOnMap = animalsByPositions.get(oldPosition);
+        animalsByPositions.remove(oldPosition);
+        animalsByPositions.putIfAbsent(animalOnMap.getPosition(), animalOnMap);
     }
 }

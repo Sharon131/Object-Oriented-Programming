@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class AnimalTest {
-    private IWorldMap map = new RectangularMap(4, 4);
+    private AbstractWorldMap map = new RectangularMap(4, 4);
     private Animal someAnimal = new Animal(map);
 
     @Test

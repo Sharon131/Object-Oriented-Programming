@@ -1,6 +1,6 @@
 package agh.cs.lab7;
 
-public class Vector2d {
+public class Vector2d{
     public final int x;
     public final int y;
 
@@ -86,4 +86,5 @@ public class Vector2d {
         hash += this.y * 17;
         return hash;
     }
+
 }

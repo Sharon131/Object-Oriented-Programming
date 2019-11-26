@@ -6,7 +6,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.*;
 
 public class RectangularMapTest {
-    private static IWorldMap map = new RectangularMap(10, 5);
+    private static AbstractWorldMap map = new RectangularMap(10, 5);
     private static OptionParser parser = new OptionParser();
 
     private static String[] commandsForRun = {"l", "r", "f", "f", "r", "l", "f", "f"};

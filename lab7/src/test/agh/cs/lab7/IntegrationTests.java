@@ -5,7 +5,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.*;
 
 public class IntegrationTests {
-    private static IWorldMap map = new RectangularMap(10, 5);
+    private static AbstractWorldMap map = new RectangularMap(10, 5);
     private static OptionParser parser = new OptionParser();
 
     private static String[] commandsForCollisionAndBorders = {"f", "b", "r", "l", "f", "f", "r", "r", "f", "f", "f", "f", "f", "f", "f", "f"};
@@ -47,7 +47,7 @@ public class IntegrationTests {
 
     @Test
     public void testAllBorders(){
-        IWorldMap new_map = new RectangularMap(3, 3);
+        AbstractWorldMap new_map = new RectangularMap(3, 3);
         Animal Ant = new Animal(new_map, new Vector2d(0,0));
 
         new_map.place(Ant);

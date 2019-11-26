@@ -10,12 +10,6 @@ public class RectangularMap extends AbstractWorldMap {
     }
 
     @Override
-    protected Vector2d[] getLowerLeftAndUpperRightCorner() {
-        Vector2d[] Corners = {lowerLeftCornerOfMap, upperRightCornerOfMap};
-        return Corners;
-    }
-
-    @Override
     public boolean canMoveTo(Vector2d position) {
 
         if (this.isOccupied(position)) return false;

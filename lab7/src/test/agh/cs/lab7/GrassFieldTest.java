@@ -7,7 +7,7 @@ import static junit.framework.TestCase.*;
 import static junit.framework.TestCase.assertSame;
 
 public class GrassFieldTest {
-    private static IWorldMap map = new GrassField(10);
+    private static AbstractWorldMap map = new GrassField(10);
     private static OptionParser parser = new OptionParser();
 
     private static String[] commandsForRun = {"l", "r", "f", "f", "r", "l", "f", "f"};
