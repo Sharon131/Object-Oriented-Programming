@@ -9,16 +9,10 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
     protected Map<Vector2d, Animal> animalsByPositions = new HashMap<>();
 
     public String toString (){
-        Vector2d [] Corners = getLowerLeftAndUpperRightCorner();
+        Vector2d lowerLeft = mapBoundaries.getLowerLeftCornerOfMap();
+        Vector2d upperRight = mapBoundaries.getUpperRightCornerOfMap();
 
-        return visualizer.draw(Corners[0], Corners[1]);
-    }
-
-    protected Vector2d[] getLowerLeftAndUpperRightCorner(){
-        Vector2d lowerLeft = new Vector2d(mapBoundaries.getMinX(), mapBoundaries.getMinY());
-        Vector2d upperRight = new Vector2d(mapBoundaries.getMaxX(), mapBoundaries.getMaxY());
-        Vector2d[] Corners = {lowerLeft, upperRight};
-        return Corners;
+        return visualizer.draw(lowerLeft, upperRight);
     }
 
     @Override
@@ -30,8 +24,7 @@ abstract public class AbstractWorldMap implements IWorldMap, IPositionChangeObse
         animals.add(animal);
         animalsByPositions.putIfAbsent(animal.getPosition(), animal);
         animal.addObserver(this);
-        animal.addObserver(mapBoundaries);
-        mapBoundaries.addNewPosition(animal.getPosition());
+        mapBoundaries.addNewAnimal(animal);
         return true;
     }
 

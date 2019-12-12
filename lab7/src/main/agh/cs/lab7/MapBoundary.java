@@ -6,24 +6,38 @@ public class MapBoundary implements IPositionChangeObserver {
     private TreeSet<Vector2d> positionsByX = new TreeSet<>(new Vector2dComparatorByX());
     private TreeSet<Vector2d> positionsByY = new TreeSet<>(new Vector2dComparatorByY());
 
-    public void addNewPosition(Vector2d position){
-        positionsByX.add(position);
-        positionsByY.add(position);
+    public void addNewAnimal(Animal animal){
+        animal.addObserver(this);
+        positionsByX.add(animal.position);
+        positionsByY.add(animal.position);
     }
 
-    public int getMinX(){
+    public void addNewGrass(Grass grass){
+        positionsByX.add(grass.position);
+        positionsByY.add(grass.position);
+    }
+
+    public Vector2d getLowerLeftCornerOfMap(){
+        return new Vector2d(getMinX(), getMinY());
+    }
+
+    public Vector2d getUpperRightCornerOfMap(){
+        return new Vector2d(getMaxX(), getMaxY());
+    }
+
+    private int getMinX(){
         return positionsByX.first().x;
     }
 
-    public int getMaxX(){
+    private int getMaxX(){
         return positionsByX.last().x;
     }
 
-    public int getMinY(){
+    private int getMinY(){
         return positionsByY.first().y;
     }
 
-    public int getMaxY(){
+    private int getMaxY(){
         return positionsByY.last().y;
     }
 

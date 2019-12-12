@@ -17,8 +17,9 @@ public class GrassField extends AbstractWorldMap {
                 position = position.add(new Vector2d(rand.nextInt(square), rand.nextInt(square)));
             }
 
-            grasses.add(new Grass(position));
-            mapBoundaries.addNewPosition(position);
+            Grass grass = new Grass(position);
+            grasses.add(grass);
+            mapBoundaries.addNewGrass(grass);
         }
     }
 
